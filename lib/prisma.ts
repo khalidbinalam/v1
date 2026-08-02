@@ -3,11 +3,10 @@ import { PrismaClient } from '@prisma/client';
 let prismaClient: any;
 
 try {
-  const dbUrl = process.env.DATABASE_URL || process.env.SUPABASE_DB_URL;
-  if (dbUrl) {
+  if (process.env.DATABASE_URL) {
     const { PrismaPg } = require('@prisma/adapter-pg');
     const { Pool } = require('pg');
-    const pool = new Pool({ connectionString: dbUrl });
+    const pool = new Pool({ connectionString: process.env.DATABASE_URL });
     const adapter = new PrismaPg(pool);
     prismaClient = new PrismaClient({ adapter } as any);
   }
